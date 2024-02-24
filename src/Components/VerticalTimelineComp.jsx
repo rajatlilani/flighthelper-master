@@ -30,8 +30,7 @@ const VerticalTimelineComp = () => {
     const InternationalFlight = useSelector(state => state.form.InternationalFlight)
     const BagsChecked = useSelector(state => state.form.BagsChecked)
     const RentalCar = useSelector(state => state.form.RentalCar)
-    const t = useSelector(state => state.form.finalData)
-    console.log(t)
+
 
 
 
@@ -83,14 +82,15 @@ const VerticalTimelineComp = () => {
     ]
 
 
-    console.log(test)
+
     return (
         <>
-            {showTimeline && <VerticalTimeline layout='1-column-left' lineColor='black'>
+            {showTimeline && <VerticalTimeline animate={false} layout='1-column-left' lineColor='black'>
 
                 {
                     test?.sort((a, b) => a.id - b.id).map((data, index) => {
                         return <VerticalTimelineElement
+
                             date={data.time}
                             key={index}
                             className="vertical-timeline-element--work"
