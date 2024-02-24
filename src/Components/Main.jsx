@@ -9,6 +9,8 @@ import { setInternationalFlight, setRentalCar, setTSAPreCheck, setBagsChecked, s
 import { useSelector } from 'react-redux';
 import VerticalTimelineComp from './VerticalTimelineComp';
 import { useEffect } from 'react';
+import Navbar from './NavbarComp';
+import NavbarComp from './NavbarComp';
 const Main = () => {
     const dispatch = useAppDispatch()
     useEffect(() => {
@@ -32,40 +34,54 @@ const Main = () => {
         dispatch(setShowTimeline(true))
     }
     return (
-
         <div
-            className='justify-content-center w-md-100'
             style={{
+                // height: "100vh",
                 display: "flex",
-                width: "100%",
-                height: "100%",
-                position: "absolute",
-                alignItems: "center",
-                // background: "linear-gradient(90deg, rgb(237 246 239) 0%, rgb(227 235 249) 100%)"
+                flexDirection: "column",
+                justifyContent: "space-around",
             }}>
-            <div className='lg-container w-lg-50 h-100 w-md-100 w-sm-100' style={{
-                // background: "rgb(255 255 255 / 70%)"
-            }}>
+            <h1>Locogo</h1>     <div
+                className='justify-content-center p-3'
+                style={{
+                    display: "flex",
+                    width: "100%",
+                    // height: "100%",
+                    // position: "absolute",
+                    alignItems: "center",
+                    // background: "linear-gradient(90deg, rgb(237 246 239) 0%, rgb(227 235 249) 100%)"
+                }}>
+                <div className='' style={{
+                    // background: "rgb(255 255 255 / 70%)"
+                }}>
 
-                <div >
-                    <h1>Locogo</h1>
-                    <input className='w-100 my-3 border-0' type="text" id="inputText" placeholder="IATA Code" onChange={(e) => dispatch(setIATACode(e.target.value))} />
-                    <Switch label="Do you have TSA Precheck?" onChange={(e) => dispatch(setTSAPreCheck(e.target.checked))} />
-                    <Switch label="Is your flight international?" onChange={(e) => dispatch(setInternationalFlight(e.target.checked))} />
-                    <Switch label="Are your bags checked?" onChange={(e) => dispatch(setBagsChecked(e.target.checked))} />
-                    <Switch label="Do you have to return a rental car?" onChange={(e) => dispatch(setRentalCar(e.target.checked))} />
-                    <Switch label="Do you want to Ride Share?" onChange={(e) => dispatch(setRideShare(e.target.checked))} />
-                    <p>What is the time of your flight?</p>
-                    <input className="w-100 mb-2 border-0" type="time" id="appt" name="appt" onChange={e => dispatch(setFlightTime(e.target.value))} />
-                    {/* <button type="button" id = "clickButton" onClick={buttonClick}>Get your timeline now!</button> */}
-                    <Button variant="primary" type="button" id="clickButton" onClick={buttonClick}>Get your timeline now!</Button>
+                    <div >
+                        {/* <NavbarComp /> */}
 
-                    <VerticalTimelineComp />
+                        {/* <input className='w-100 my-3 border-0' type="text" id="inputText" placeholder="IATA Code" onChange={(e) => dispatch(setIATACode(e.target.value))} /> */}
+                        <Form.Control size="lg" type="text" placeholder="IATA Code" onChange={(e) => dispatch(setIATACode(e.target.value))} />
+
+                        <Switch label="Do you have TSA Precheck?" onChange={(e) => dispatch(setTSAPreCheck(e.target.checked))} />
+                        <Switch label="Is your flight international?" onChange={(e) => dispatch(setInternationalFlight(e.target.checked))} />
+                        <Switch label="Are your bags checked?" onChange={(e) => dispatch(setBagsChecked(e.target.checked))} />
+                        <Switch label="Do you have to return a rental car?" onChange={(e) => dispatch(setRentalCar(e.target.checked))} />
+                        <Switch label="Do you want to Ride Share?" onChange={(e) => dispatch(setRideShare(e.target.checked))} />
+                        <label className="my-2" style={{ fontSize: "1.2rem" }}>What is the time of your flight?</label>
+                        {/* <input className="w-100 mb-2 border-0" type="time" id="appt" name="appt" onChange={e => dispatch(setFlightTime(e.target.value))} /> */}
+                        <Form.Control size="lg" type="time" onChange={e => dispatch(setFlightTime(e.target.value))} />
+                        {/* <button type="button" id = "clickButton" onClick={buttonClick}>Get your timeline now!</button> */}
+
+                        <VerticalTimelineComp />
+                    </div>
+
+
                 </div>
-
-
+            </div>
+            <div>
+                <Button variant="primary" className='my-2' size="lg" type="button" id="clickButton" onClick={buttonClick}>Get your timeline now!</Button>
             </div>
         </div>
+
 
     )
 }

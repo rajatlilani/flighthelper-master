@@ -113,7 +113,7 @@ export const fetchAirportInfo = createAsyncThunk(
             });
             dispatch(fetchAirportWaitTimes())
             dispatch(fetchGoogleDistanceMatrix())
-            dispatch(fetchDistanceMatrix({ orLat: state.form.latitudeOrigin, orLong: state.form.longitudeOrigin, lat: response.data.latitude, long: response.data.longitude }))
+            dispatch(fetchDistanceMatrix({ lat: response.data.latitude, long: response.data.longitude }))
             return response.data;
         } catch (error) {
             return thunkAPI.rejectWithValue({ error: error.message });
@@ -171,7 +171,7 @@ export const fetchDistanceMatrix = createAsyncThunk(
 
 
         try {
-            const testUrl = "https://api.distancematrix.ai/maps/api/distancematrix/json?origins=" + orLat + "%2C" + orLong + "&destinations=" + lat + "%2C" + long + "&key=UzwgOy0n3NZkVLbRwLWzoxOwfF5O2i9g8LL2OFnuLxheT7FPXI1I1QHoVu9N3lhl";
+            const testUrl = "https://api.distancematrix.ai/maps/api/distancematrix/json?origins=" + "40.7427990" + "%2C" + "-74.1784187" + "&destinations=" + lat + "%2C" + long + "&key=UzwgOy0n3NZkVLbRwLWzoxOwfF5O2i9g8LL2OFnuLxheT7FPXI1I1QHoVu9N3lhl";
             const response = await axios.get(testUrl);
             if (response.data.status === "OK")
                 return response.data.rows[0].elements[0].duration;
@@ -227,21 +227,23 @@ const formSlice = createSlice({
 
     },
     extraReducers: (builder) => {
+
         builder
             .addCase(fetchAirportInfo.fulfilled, (state, action) => {
                 state.longitudeDestination = action.payload.longitude
                 state.latitudeDestination = action.payload.latitude
 
-                if (state.InternationalFlight == true) {
-                    state.totalBuffer += 180;
+
+                if (state.InternationalFlight === true) {
+                    state.totalBuffer += 90;
                 }
-                else {
-                    state.totalBuffer += 75;
+                else if (state.InternationalFlight === false) {
+                    state.totalBuffer += 0;
                 }
-                if (state.BagsChecked = true) {
+                if (state.BagsChecked === true) {
                     state.totalBuffer += 15;
                 }
-                if (state.RentalCar = true) {
+                if (state.RentalCar === true) {
                     state.totalBuffer += 30;
                 }
                 // if (state.rideShare = true) {
